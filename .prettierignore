@@ -1,0 +1,8 @@
+dist
+node_modules
+playwright-report
+test-results
+public/ui
+public-runtime/ui
+public/gltf
+package-lock.json

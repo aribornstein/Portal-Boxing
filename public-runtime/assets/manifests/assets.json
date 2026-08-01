@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "audio-guard-wav",
+      "path": "audio/guard.wav",
+      "bytes": 7982,
+      "sha256": "e7a1db54dc2b96e2ebdaf1d5a306a4940646d262a944125ee92127e18512d92e",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
+      "id": "audio-hit-wav",
+      "path": "audio/hit.wav",
+      "bytes": 6218,
+      "sha256": "642e612abfae6e78e30993858e9c1e9b48c71747339ab92c0358326f013a9dde",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
+      "id": "audio-knockout-wav",
+      "path": "audio/knockout.wav",
+      "bytes": 31796,
+      "sha256": "553b096822d9dc09576f859dcc49adc5bb2e3bfa31e00df998674e820a6c3b30",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
+      "id": "audio-player-hit-wav",
+      "path": "audio/player-hit.wav",
+      "bytes": 8864,
+      "sha256": "0e772c3fb43f2d450a5995b14852867d34ccf289a8969a14875114acae3f3ad5",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
+      "id": "audio-portal-wav",
+      "path": "audio/portal.wav",
+      "bytes": 24300,
+      "sha256": "8010bff1059bb0619ec2c8e6ccfffaeb5917759ee891bc2652aca624d1eebe6c",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
+      "id": "audio-telegraph-wav",
+      "path": "audio/telegraph.wav",
+      "bytes": 10628,
+      "sha256": "9478d8ae6008509ab7635b532c5d472802f52f5a0acf264f586d6d59430afd37",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
+      "id": "audio-wave-clear-wav",
+      "path": "audio/wave-clear.wav",
+      "bytes": 18566,
+      "sha256": "532ffabaaf2cefea30ae849bbb3422d8596fc50810880c7b67a17f73521f49d1",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
+      "id": "input-visuals-controller-left-glb",
+      "path": "input-visuals/controller-left.glb",
+      "bytes": 217984,
+      "sha256": "41a35b80221398d37029cbfaa9e39084ccd43e0206be72a5e8460f52e7882cb4",
+      "kind": "glb",
+      "source": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0.20/dist/profiles/meta-quest-touch-plus/left.glb",
+      "author": "Amazon",
+      "license": "MIT"
+    },
+    {
+      "id": "input-visuals-controller-right-glb",
+      "path": "input-visuals/controller-right.glb",
+      "bytes": 213868,
+      "sha256": "5126d638fb1d03e05d16d8eec3b31b9588df88eaa8b42cc21b857fac3bd44916",
+      "kind": "glb",
+      "source": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0.20/dist/profiles/meta-quest-touch-plus/right.glb",
+      "author": "Amazon",
+      "license": "MIT"
+    },
+    {
+      "id": "input-visuals-hand-left-glb",
+      "path": "input-visuals/hand-left.glb",
+      "bytes": 94572,
+      "sha256": "bc67783144944ea1cda54d9247885825ea5fb9d4651469fe7d00be517a5c2b87",
+      "kind": "glb",
+      "source": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0.20/dist/profiles/generic-hand/left.glb",
+      "author": "Amazon",
+      "license": "MIT"
+    },
+    {
+      "id": "input-visuals-hand-right-glb",
+      "path": "input-visuals/hand-right.glb",
+      "bytes": 94004,
+      "sha256": "291790c14f7f88a7f9bd35330c47392ed8e8d395ae6728f4bb7089f1bc1f2b96",
+      "kind": "glb",
+      "source": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0.20/dist/profiles/generic-hand/right.glb",
+      "author": "Amazon",
+      "license": "MIT"
+    },
+    {
+      "id": "input-visuals-LICENSE-md",
+      "path": "input-visuals/LICENSE.md",
+      "bytes": 1094,
+      "sha256": "a25f28ae00e5aad1b335eec40e2e6db0bd771ac38ad10b95cbef495c1bb74341",
+      "kind": "md",
+      "source": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0.20/LICENSE.md",
+      "author": "Amazon",
+      "license": "MIT"
+    }
+  ]
+}

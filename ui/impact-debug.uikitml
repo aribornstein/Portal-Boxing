@@ -1,0 +1,64 @@
+<style>
+  .monitor {
+    align-items: flex-start;
+    width: 68;
+    padding: 1.4;
+    display: flex;
+    flex-direction: column;
+    background-color: #070b0ee6;
+    border-color: #55cdf6;
+    border-width: 0.12;
+    border-radius: 0.5;
+  }
+
+  .header {
+    align-items: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .controls {
+    align-items: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.6;
+  }
+
+  .label {
+    font-size: 1.4;
+    font-weight: bold;
+    color: #6f8791;
+  }
+
+  .value {
+    margin-top: 0.35;
+    font-size: 2.2;
+    font-weight: bold;
+    color: #f2f0e9;
+  }
+
+  .toggle {
+    padding: 0.7;
+    background-color: #111a1f;
+    border-color: #3b525c;
+    border-width: 0.1;
+    border-radius: 0.3;
+    color: #dbe7eb;
+    font-size: 1.4;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+<div class="monitor">
+  <div class="header">
+    <span class="label">PHYSICAL CONTACT MONITOR</span>
+  </div>
+  <div class="controls">
+    <button id="depth-debug-button" class="toggle">DEPTH VIEW OFF</button>
+    <button id="contact-diagnostics-button" class="toggle">LOCK CONTACT TARGET</button>
+  </div>
+  <span id="impact-diagnostic" class="value">ARMED / START COMBAT</span>
+</div>
