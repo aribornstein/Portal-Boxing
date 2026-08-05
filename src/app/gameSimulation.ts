@@ -399,13 +399,6 @@ export class GameSimulation {
       this.impactSequence += 1;
       this.latestImpact = { ...impact, sequence: this.impactSequence };
     }
-    if (this.physicalContactDiagnosticsEnabled) {
-      this.status = impact
-        ? `Diagnostic ${impact.source}: ${impact.speed.toFixed(1)} m/s`
-        : "Diagnostic impact recorded";
-      this.notify();
-      return true;
-    }
     this.encounterHealth = Math.max(0, this.encounterHealth - damage);
     this.score += Math.max(1, Math.round(damage));
     if (this.encounter.state === EncounterState.BossCombat) {
@@ -434,8 +427,8 @@ export class GameSimulation {
     if (this.physicalContactDiagnosticsEnabled === enabled) return;
     this.physicalContactDiagnosticsEnabled = enabled;
     this.status = enabled
-      ? "Physical contact target locked"
-      : "Physical contact diagnostics ended";
+      ? "Kick test mode: opponent held in place"
+      : "Kick test mode ended";
     this.notify();
   }
 

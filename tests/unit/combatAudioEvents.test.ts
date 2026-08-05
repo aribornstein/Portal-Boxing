@@ -30,8 +30,49 @@ describe("combat audio events", () => {
     ).toEqual(["portal"]);
   });
 
+  it("signals when the physical contact target is locked", () => {
+    expect(
+      cues(baseSnapshot, {
+        ...baseSnapshot,
+        physicalContactDiagnosticsEnabled: true,
+      }),
+    ).toEqual(["target-lock"]);
+  });
+
   it("signals player strikes and guarded or open incoming hits", () => {
     expect(cues(baseSnapshot, { ...baseSnapshot, score: 10 })).toEqual(["hit"]);
+    const lockedSnapshot = {
+      ...baseSnapshot,
+      physicalContactDiagnosticsEnabled: true,
+    };
+    expect(
+      cues(lockedSnapshot, {
+        ...lockedSnapshot,
+        latestImpact: {
+          source: "punch",
+          region: "torso",
+          direction: [0, 0, -1],
+          speed: 2,
+          confidence: 1,
+          timestamp: 1,
+          sequence: 1,
+        },
+      }),
+    ).toEqual(["hit"]);
+    expect(
+      cues(lockedSnapshot, {
+        ...lockedSnapshot,
+        latestImpact: {
+          source: "kick",
+          region: "limb",
+          direction: [0, 0, -1],
+          speed: 2.5,
+          confidence: 0.8,
+          timestamp: 2,
+          sequence: 2,
+        },
+      }),
+    ).toEqual(["kick-hit"]);
     expect(
       cues(baseSnapshot, {
         ...baseSnapshot,

@@ -1,5 +1,5 @@
 import { createSystem, Vector3 } from "@iwsdk/core";
-import type { Mesh, Object3D } from "@iwsdk/core";
+import type { Object3D } from "@iwsdk/core";
 
 import type {
   GameSimulation,
@@ -62,7 +62,6 @@ export class HandCombatSystem extends createSystem({
       !simulation ||
       !snapshot ||
       snapshot.application !== "PLAYING" ||
-      snapshot.physicalContactDiagnosticsEnabled ||
       (snapshot.encounter !== "COMBAT" && snapshot.encounter !== "BOSS_COMBAT")
     ) {
       this.resetHand(this.left);
@@ -167,8 +166,10 @@ export class HandCombatSystem extends createSystem({
     for (const entity of this.queries.opponents.entities) {
       const root = entity.object3D;
       if (!root) continue;
-      const head = root.userData.head as Mesh | undefined;
-      const torso = root.userData.torso as Mesh | undefined;
+      const head = root.userData.opponentHeadPunchTarget as
+        Object3D | undefined;
+      const torso = root.userData.opponentUpperTorsoPunchTarget as
+        Object3D | undefined;
       if (head) {
         head.getWorldPosition(this.targetPosition);
         const distance = position.distanceTo(this.targetPosition);
@@ -194,8 +195,9 @@ export class HandCombatSystem extends createSystem({
     if (this.contactRoot) {
       const target =
         this.contactRegion === "head"
-          ? (this.contactRoot.userData.head as Mesh)
-          : (this.contactRoot.userData.torso as Mesh);
+          ? (this.contactRoot.userData.opponentHeadPunchTarget as Object3D)
+          : (this.contactRoot.userData
+              .opponentUpperTorsoPunchTarget as Object3D);
       target.getWorldPosition(this.targetPosition);
     }
     return Boolean(this.contactRoot);

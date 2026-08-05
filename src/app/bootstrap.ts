@@ -16,7 +16,7 @@ import { GameplayPresentationSystem } from "../gameplay/presentationSystem.js";
 import { HandCombatSystem } from "../combat/handCombatSystem.js";
 import { EnemyCombatSystem } from "../combat/enemyCombatSystem.js";
 import {
-  PhysicalContactSystem,
+  KickCombatSystem,
   type PhysicalContactDiagnostic,
 } from "../combat/physicalContactSystem.js";
 import { RoomCaptureSystem } from "../room/roomCaptureSystem.js";
@@ -93,12 +93,12 @@ export async function bootstrap() {
     world.registerSystem(CombatAudioSystem);
     world.registerSystem(EnemyCombatSystem);
     world.registerSystem(HandCombatSystem, { priority: 0.5 });
-    world.registerSystem(PhysicalContactSystem, { priority: 0.6 });
+    world.registerSystem(KickCombatSystem, { priority: 0.6 });
     const runtimeBridge = world.getSystem(XRRuntimeBridgeSystem);
     const unsubscribeRuntime = runtimeBridge?.subscribe((status) =>
       renderLiveXRStatus(app, status),
     );
-    const physicalContactSystem = world.getSystem(PhysicalContactSystem);
+    const physicalContactSystem = world.getSystem(KickCombatSystem);
     const unsubscribePhysicalContact =
       physicalContactSystem?.subscribeDiagnostics((diagnostic) =>
         renderPhysicalContactDiagnostic(app, diagnostic),
@@ -147,7 +147,7 @@ export async function bootstrap() {
       );
     },
     () => {
-      const system = world?.getSystem(PhysicalContactSystem);
+      const system = world?.getSystem(KickCombatSystem);
       if (!system) throw new Error("Physical contact system is unavailable");
       system.setDebugVisible(!system.isDebugVisible);
     },

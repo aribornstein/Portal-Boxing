@@ -17,7 +17,7 @@ import type {
   SimulationSnapshot,
 } from "./app/gameSimulation.js";
 import {
-  PhysicalContactSystem,
+  KickCombatSystem,
   type PhysicalContactDiagnostic,
 } from "./combat/physicalContactSystem.js";
 import { EnemyCombatSystem } from "./combat/enemyCombatSystem.js";
@@ -126,7 +126,7 @@ export class PanelSystem extends createSystem({
           this.visibilityState.value !== VisibilityState.NonImmersive;
       }
     };
-    const contactSystem = this.world.getSystem(PhysicalContactSystem);
+    const contactSystem = this.world.getSystem(KickCombatSystem);
     const enemySystem = this.world.getSystem(EnemyCombatSystem);
     if (contactSystem) {
       debugButton.addEventListener("click", () =>
@@ -150,16 +150,13 @@ export class PanelSystem extends createSystem({
       diagnosticsButton.addEventListener("click", () => {
         const enabled = !enemySystem.isPhysicalContactDiagnosticsEnabled;
         enemySystem.setPhysicalContactDiagnostics(enabled);
-        if (enabled) {
-          contactSystem?.setDebugVisible(true);
-        }
       });
     }
     const updateDiagnosticsButton = (snapshot: SimulationSnapshot) => {
       diagnosticsButton.setProperties({
         text: snapshot.physicalContactDiagnosticsEnabled
-          ? "CONTACT TARGET LOCKED"
-          : "LOCK CONTACT TARGET",
+          ? "KICK TEST MODE ON"
+          : "KICK TEST MODE OFF",
         backgroundColor: snapshot.physicalContactDiagnosticsEnabled
           ? "#185d3a"
           : "#111a1f",
@@ -244,7 +241,7 @@ export class PanelSystem extends createSystem({
     bypassContinueButton.addEventListener("click", () =>
       this.runCommand(() => simulation.continueWithoutRoomSafety()),
     );
-    const contactSystem = this.world.getSystem(PhysicalContactSystem);
+    const contactSystem = this.world.getSystem(KickCombatSystem);
     if (contactSystem && depthDebugButton) {
       depthDebugButton.addEventListener("click", () =>
         contactSystem.setDebugVisible(!contactSystem.isDebugVisible),

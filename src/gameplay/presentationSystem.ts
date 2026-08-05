@@ -91,12 +91,11 @@ export class GameplayPresentationSystem extends createSystem({
       const slot = entity.getValue(OpponentVisual, "slot") ?? 0;
       const boss = entity.getValue(OpponentVisual, "boss");
       const baseScale = Number(root.userData.baseScale ?? 1);
-      root.scale.setScalar(
-        time < Number(root.userData.hitFlashUntil ?? 0)
-          ? baseScale * 1.06
-          : baseScale,
+      const reactionRoot = root.userData.reactionRoot as Group | undefined;
+      root.scale.setScalar(baseScale);
+      reactionRoot?.scale.setScalar(
+        time < Number(root.userData.hitFlashUntil ?? 0) ? 1.06 : 1,
       );
-      root.position.y = Math.sin(seconds * 2.4 + slot) * 0.025;
       this.updateImpactReaction(root, seconds, slot);
       const leftGlove = root.userData.leftGlove as Mesh | undefined;
       const rightGlove = root.userData.rightGlove as Mesh | undefined;
@@ -212,7 +211,7 @@ export class GameplayPresentationSystem extends createSystem({
     const head = root.userData.head as Mesh | undefined;
     const torso = root.userData.torso as Mesh | undefined;
     const hips = root.userData.hips as Mesh | undefined;
-    visualRoot.position.set(0, 0, 0);
+    visualRoot.position.set(0, Math.sin(time * 2.4 + slot) * 0.025, 0);
     visualRoot.rotation.set(0, Math.sin(time * 0.8 + slot) * 0.08, 0);
     head?.rotation.set(0, 0, 0);
     torso?.rotation.set(0, 0, 0);
@@ -483,6 +482,24 @@ function createOpponent(
   leftBoot.position.set(-0.14, -0.02, 0.08);
   const rightBoot = leftBoot.clone();
   rightBoot.position.x *= -1;
+  const opponentLeftKickTarget = new Group();
+  opponentLeftKickTarget.name = "OpponentLeftKickTarget";
+  opponentLeftKickTarget.position.set(-0.14, 0.19, 0.145);
+  opponentLeftKickTarget.userData.size = [0.3, 0.3, 0.06] as const;
+  const opponentRightKickTarget = new Group();
+  opponentRightKickTarget.name = "OpponentRightKickTarget";
+  opponentRightKickTarget.position.set(0.14, 0.19, 0.145);
+  opponentRightKickTarget.userData.size = [0.3, 0.3, 0.06] as const;
+  const opponentGroinKickTarget = new Group();
+  opponentGroinKickTarget.name = "OpponentGroinKickTarget";
+  opponentGroinKickTarget.position.set(0, 0.5, 0.16);
+  opponentGroinKickTarget.userData.size = [0.28, 0.22, 0.06] as const;
+  const opponentHeadPunchTarget = new Group();
+  opponentHeadPunchTarget.name = "OpponentHeadPunchTarget";
+  opponentHeadPunchTarget.position.set(0, 1.61, 0.12);
+  const opponentUpperTorsoPunchTarget = new Group();
+  opponentUpperTorsoPunchTarget.name = "OpponentUpperTorsoPunchTarget";
+  opponentUpperTorsoPunchTarget.position.set(0, 1.12, 0.16);
 
   const attackTelegraph = new Mesh(
     new TorusGeometry(0.24, 0.025, 8, 24),
@@ -528,6 +545,13 @@ function createOpponent(
     leftBoot,
     rightBoot,
   );
+  group.add(
+    opponentLeftKickTarget,
+    opponentRightKickTarget,
+    opponentGroinKickTarget,
+    opponentHeadPunchTarget,
+    opponentUpperTorsoPunchTarget,
+  );
   if (archetype === "guard") {
     const leftGuard = new Mesh(
       new BoxGeometry(0.18, 0.28, 0.07),
@@ -556,6 +580,11 @@ function createOpponent(
   group.userData.hips = hips;
   group.userData.leftKnee = leftKnee;
   group.userData.rightKnee = rightKnee;
+  group.userData.opponentLeftKickTarget = opponentLeftKickTarget;
+  group.userData.opponentRightKickTarget = opponentRightKickTarget;
+  group.userData.opponentGroinKickTarget = opponentGroinKickTarget;
+  group.userData.opponentHeadPunchTarget = opponentHeadPunchTarget;
+  group.userData.opponentUpperTorsoPunchTarget = opponentUpperTorsoPunchTarget;
   group.userData.leftGlove = leftGlove;
   group.userData.rightGlove = rightGlove;
   group.userData.attackTelegraph = attackTelegraph;

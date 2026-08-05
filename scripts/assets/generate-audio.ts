@@ -27,6 +27,15 @@ const cues: readonly CueDefinition[] = [
       Math.exp(-time * 25),
   },
   {
+    name: "kick-hit",
+    duration: 0.24,
+    sample: (time, noise) =>
+      (Math.sin(time * 58 * Math.PI * 2) * 0.72 +
+        Math.sin(time * 116 * Math.PI * 2) * 0.18 +
+        noise * 0.1) *
+      Math.exp(-time * 14),
+  },
+  {
     name: "player-hit",
     duration: 0.2,
     sample: (time, noise) =>

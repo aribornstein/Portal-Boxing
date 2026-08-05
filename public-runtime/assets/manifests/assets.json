@@ -22,6 +22,16 @@
       "originalWork": true
     },
     {
+      "id": "audio-kick-hit-wav",
+      "path": "audio/kick-hit.wav",
+      "bytes": 10628,
+      "sha256": "688614b20f2abf86787dda699d959c62b9171a80962326d828927aad9cf4001f",
+      "kind": "wav",
+      "author": "PORTALAR project",
+      "license": "Project-owned original",
+      "originalWork": true
+    },
+    {
       "id": "audio-knockout-wav",
       "path": "audio/knockout.wav",
       "bytes": 31796,

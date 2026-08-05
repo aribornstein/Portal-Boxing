@@ -41,7 +41,7 @@ describe("game domain", () => {
     expect(simulation.snapshot.application).toBe("PAUSED");
   });
 
-  it("records diagnostic impacts without changing either health pool", () => {
+  it("holds enemy attacks without suppressing player impact damage", () => {
     const simulation = new GameSimulation(false);
     simulation.markRuntimeReady();
     simulation.enterRoomSetup();
@@ -54,7 +54,7 @@ describe("game domain", () => {
     simulation.setPhysicalContactDiagnostics(true);
     expect(
       simulation.applyPlayerImpact(20, {
-        source: "held-object",
+        source: "kick",
         region: "limb",
         direction: [0, 0, -1],
         speed: 3,
@@ -63,9 +63,9 @@ describe("game domain", () => {
       }),
     ).toBe(true);
     expect(simulation.snapshot.latestImpact).toMatchObject({
-      source: "held-object",
+      source: "kick",
     });
-    expect(simulation.snapshot.encounterHealth).toBe(enemyHealth);
+    expect(simulation.snapshot.encounterHealth).toBe(enemyHealth - 20);
     expect(simulation.applyEnemyStrike(20)).toBe(false);
     expect(simulation.snapshot.playerHealth).toBe(playerHealth);
   });

@@ -6,6 +6,13 @@ const existing = await readManifest();
 const metadata = new Map(existing.assets.map((asset) => [asset.path, asset]));
 const assets = (await inventoryAssets()).map((asset) => ({
   ...metadata.get(asset.path),
+  ...(asset.path.startsWith("audio/")
+    ? {
+        author: "PORTALAR project",
+        license: "Project-owned original",
+        originalWork: true,
+      }
+    : {}),
   ...asset,
 }));
 await writeFile(

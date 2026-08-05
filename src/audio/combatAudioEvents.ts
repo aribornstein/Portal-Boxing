@@ -1,7 +1,14 @@
 import type { SimulationSnapshot } from "../app/gameSimulation.js";
 
 export type CombatAudioCue =
-  "portal" | "hit" | "player-hit" | "guard" | "wave-clear" | "knockout";
+  | "portal"
+  | "target-lock"
+  | "hit"
+  | "kick-hit"
+  | "player-hit"
+  | "guard"
+  | "wave-clear"
+  | "knockout";
 
 export function selectCombatAudioCuesInto(
   previous: SimulationSnapshot,
@@ -12,11 +19,24 @@ export function selectCombatAudioCuesInto(
   if (previous.application !== "PLAYING" && current.application === "PLAYING")
     output.push("portal");
   if (
+    !previous.physicalContactDiagnosticsEnabled &&
+    current.physicalContactDiagnosticsEnabled
+  ) {
+    output.push("target-lock");
+  }
+  const hasNewImpact =
+    (current.latestImpact?.sequence ?? 0) >
+    (previous.latestImpact?.sequence ?? 0);
+  if (
     current.application === "PLAYING" &&
-    current.score > previous.score &&
+    (hasNewImpact || current.score > previous.score) &&
     (previous.encounter === "COMBAT" || previous.encounter === "BOSS_COMBAT")
   ) {
-    output.push("hit");
+    output.push(
+      hasNewImpact && current.latestImpact?.source === "kick"
+        ? "kick-hit"
+        : "hit",
+    );
   }
   if (current.playerHealth < previous.playerHealth) {
     output.push(current.playerGuarding ? "guard" : "player-hit");
