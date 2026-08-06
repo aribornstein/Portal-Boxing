@@ -60,6 +60,9 @@ test("complete desktop simulation reaches a second stage and restarts", async ({
   await page.getByRole("button", { name: "Load room fixture" }).click();
   await page.getByRole("button", { name: "Confirm labels + safety" }).click();
   await page.getByRole("button", { name: "Open portal" }).click();
+  await expect(page.locator("[data-role='stage']")).toHaveText(
+    "L1 · subway-platform",
+  );
   await expect
     .poll(async () => Math.abs((await canvasEnergy(page)) - emptySceneEnergy))
     .toBeGreaterThan(1_000_000);
@@ -83,6 +86,9 @@ test("complete desktop simulation reaches a second stage and restarts", async ({
   await expect(page.locator("[data-role='health']")).toHaveText("63/63");
   await expect(page.locator("[data-role='stage']")).not.toHaveText(
     firstStage ?? "",
+  );
+  await expect(page.locator("[data-role='stage']")).toHaveText(
+    "L2 · neon-city",
   );
   await page.getByRole("button", { name: "Restart" }).click();
   await expect(page.locator("[data-role='encounter']")).toHaveText("IDLE");

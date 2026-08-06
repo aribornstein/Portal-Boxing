@@ -22,7 +22,7 @@ IWSDK 0.4.2 implements `features.physics` with Havok. It does not expose a suppo
 
 ## ADR-005: Safety Before Layout
 
-Room processing produces provenance-tagged observations, restricted regions, and a strike-safe volume. Portal placement, enemy navigation, kicks, and held-object activation consume a SafetyAssessment. Unknown, stale, low-confidence, living, fragile, glass, sharp, hot, and restricted candidates are never promoted to safe interactions automatically.
+Room processing produces provenance-tagged observations, restricted regions, and a strike-safe volume. Portal placement and enemy navigation consume the resulting `SafetyAssessment`; combat does not begin until the room flow has completed or an explicit debug bypass is active. Unknown, stale, low-confidence, living, fragile, glass, sharp, hot, and restricted candidates are never promoted to safe interactions automatically.
 
 ## ADR-006: Bounded Asynchronous Inference
 
@@ -31,6 +31,12 @@ Semantic inference is independent from XR rendering. A single worker owns one ON
 ## ADR-007: Deterministic Content
 
 Stage generation accepts room snapshot hash, game version, seed, and difficulty and emits a serializable manifest. Runtime systems consume typed content; they do not hardcode complete stages. Rendering is a consumer and cannot alter combat outcomes.
+
+## ADR-008: Exclusive Punch And Kick Ownership
+
+`HandCombatSystem` owns tracked-input strikes against the authored head and upper-torso anchors. `KickCombatSystem` owns GPU-depth contact against independent left-leg, right-leg, and groin anchors. There is no shared anonymous-body or held-object impact classifier. A compatibility-only held-object reaction variant remains in the impact domain, but no detector emits it. Direct and swept hand/controller evidence rejects a lower-body depth candidate so both systems cannot authorize the same contact.
+
+Each kick target has independent mask, temporal, lifecycle, and cooldown state. Target anchors live outside cosmetic reaction transforms. Apparent depth speed is compensated for target translation and rotational surface travel before coherence and scoring, preventing stationary room geometry from becoming an impact merely because enemy navigation moves or turns a target through it.
 
 ## Runtime Layers
 

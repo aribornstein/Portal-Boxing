@@ -1,7 +1,9 @@
 import {
+  AssetManager,
   DepthSensingSystem,
   ReferenceSpaceType,
   SessionMode,
+  SRGBColorSpace,
   VisibilityState,
   World,
   type World as WorldInstance,
@@ -66,6 +68,7 @@ export async function bootstrap() {
       render: {
         defaultLighting: false,
         stencil: true,
+        fov: 72,
         camera: { position: [0, 1.6, 3], lookAt: [0, 1.2, 0] },
       },
       features: {
@@ -83,6 +86,25 @@ export async function bootstrap() {
         error,
       );
     });
+    await Promise.all([
+      AssetManager.loadTexture(
+        "./textures/vistas/shanghai-bund.jpg",
+        "vista-neon-city",
+      ),
+      AssetManager.loadTexture(
+        "./textures/vistas/dresden-station-night.jpg",
+        "vista-subway-platform",
+      ),
+    ])
+      .then((textures) => {
+        for (const texture of textures) texture.colorSpace = SRGBColorSpace;
+      })
+      .catch((error: unknown) => {
+        console.warn(
+          "Stage vista plates unavailable; using shader fallback",
+          error,
+        );
+      });
     world.globals.portalBoxingSimulation = simulation;
     world.registerSystem(DepthSensingSystem);
     world.registerSystem(DepthSafetySystem, { priority: 0.25 });
@@ -213,9 +235,16 @@ function renderCapabilities(
 }
 
 function renderSnapshot(app: HTMLElement, snapshot: SimulationSnapshot) {
+  app.dataset.application = snapshot.application;
   setText(app, "application", snapshot.application);
   setText(app, "encounter", snapshot.encounter);
-  setText(app, "stage", snapshot.stage?.theme ?? "--");
+  setText(
+    app,
+    "stage",
+    snapshot.stage
+      ? `L${snapshot.stageNumber} · ${snapshot.stage.theme}`
+      : "--",
+  );
   setText(
     app,
     "wave",

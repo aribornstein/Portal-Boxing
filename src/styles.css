@@ -288,6 +288,125 @@ button.secondary,
 .capability-state.session-check {
   background: #f2bd4b;
 }
+
+#app[data-application="PLAYING"] {
+  pointer-events: none;
+}
+#app[data-application="PLAYING"] .topbar,
+#app[data-application="PLAYING"] .hero,
+#app[data-application="PLAYING"] .capability-section,
+#app[data-application="PLAYING"] .xr-status-strip {
+  display: none;
+}
+#app[data-application="PLAYING"] main {
+  width: 100%;
+}
+#app[data-application="PLAYING"] .console {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: none;
+}
+#app[data-application="PLAYING"] .status-strip {
+  position: fixed;
+  top: 16px;
+  left: 18px;
+  right: 18px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.7fr 1fr 1fr 0.65fr;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+}
+#app[data-application="PLAYING"] .status-strip > div {
+  display: none;
+  min-height: 58px;
+  padding: 8px 11px;
+  border: 1px solid #315362;
+  border-top: 2px solid #55cdf6;
+  background: #05090cba;
+  backdrop-filter: blur(8px);
+}
+#app[data-application="PLAYING"] .status-strip > div:nth-child(3),
+#app[data-application="PLAYING"] .status-strip > div:nth-child(4),
+#app[data-application="PLAYING"] .status-strip > div:nth-child(6),
+#app[data-application="PLAYING"] .status-strip > div:nth-child(7),
+#app[data-application="PLAYING"] .status-strip > div:nth-child(9) {
+  display: block;
+}
+#app[data-application="PLAYING"] .status-strip > div:nth-child(6) {
+  border-top-color: #ff5d4f;
+}
+#app[data-application="PLAYING"] .status-strip > div:nth-child(3) {
+  border-top-color: #ffa83d;
+}
+#app[data-application="PLAYING"] .status-strip > div:nth-child(7) {
+  border-top-color: #59dc8f;
+}
+#app[data-application="PLAYING"] .status-strip > div:nth-child(9) {
+  text-align: right;
+}
+#app[data-application="PLAYING"] .status-strip span {
+  color: #8fa9b4;
+  font-size: 9px;
+  font-weight: 800;
+}
+#app[data-application="PLAYING"] .status-strip strong {
+  margin-top: 1px;
+  font-family: Impact, "Arial Narrow", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+}
+#app[data-application="PLAYING"] .live-status {
+  position: fixed;
+  bottom: 15px;
+  left: 18px;
+  max-width: min(48vw, 520px);
+  min-height: 0;
+  margin: 0;
+  padding: 7px 10px;
+  border-left: 2px solid #55cdf6;
+  background: #05090ca6;
+  color: #cceefa;
+  font-size: 12px;
+  backdrop-filter: blur(8px);
+}
+#app[data-application="PLAYING"] .command-grid {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  max-width: min(52vw, 690px);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+  opacity: 0.2;
+  pointer-events: auto;
+  transition: opacity 160ms ease;
+}
+#app[data-application="PLAYING"] .command-grid:hover,
+#app[data-application="PLAYING"] .command-grid:focus-within {
+  opacity: 0.96;
+}
+#app[data-application="PLAYING"] .command-grid button {
+  width: auto;
+  min-width: 0;
+  min-height: 28px;
+  padding: 4px 7px;
+  border-radius: 2px;
+  font-size: 9px;
+}
+#app[data-application="PLAYING"] .command-grid [data-command="live-room"],
+#app[data-application="PLAYING"] .command-grid [data-command="room"],
+#app[data-application="PLAYING"] .command-grid [data-command="confirm"],
+#app[data-application="PLAYING"] .command-grid [data-command="safety-bypass"],
+#app[data-application="PLAYING"] .command-grid [data-command="depth-debug"],
+#app[data-application="PLAYING"] .command-grid [data-command="continue-bypass"],
+#app[data-application="PLAYING"] .command-grid [data-command="portal"] {
+  display: none;
+}
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -308,6 +427,9 @@ button.secondary,
   .capability-grid {
     grid-template-columns: 1fr 1fr;
   }
+  #app[data-application="PLAYING"] .status-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 @media (max-width: 560px) {
   .runtime-badge {
@@ -326,6 +448,29 @@ button.secondary,
   }
   .command-grid {
     grid-template-columns: 1fr 1fr;
+  }
+  #app[data-application="PLAYING"] .status-strip {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #app[data-application="PLAYING"] .status-strip > div {
+    min-height: 48px;
+    padding: 5px 8px;
+  }
+  #app[data-application="PLAYING"] .status-strip strong {
+    font-size: 17px;
+  }
+  #app[data-application="PLAYING"] .live-status {
+    bottom: 8px;
+    left: 8px;
+    max-width: 60vw;
+  }
+  #app[data-application="PLAYING"] .command-grid {
+    right: 8px;
+    bottom: 8px;
+    max-width: 38vw;
   }
 }
 @media (prefers-reduced-motion: reduce) {

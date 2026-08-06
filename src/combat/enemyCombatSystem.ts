@@ -117,9 +117,23 @@ export class EnemyCombatSystem extends createSystem({
     for (const entity of this.queries.opponents.entities) {
       const root = entity.object3D;
       if (!root) continue;
+      if (!root.userData.emergenceComplete) {
+        const state = root.userData[runtimeStateKey] as
+          EnemyRuntimeState | undefined;
+        if (state) {
+          state.phase = "idle";
+          state.behavior = "approach";
+          state.nextDecisionTime = Number.POSITIVE_INFINITY;
+        }
+        this.setTelegraph(root, false);
+        continue;
+      }
       const state = root.userData[runtimeStateKey] as
         EnemyRuntimeState | undefined;
       if (!state) continue;
+      if (state.nextDecisionTime === Number.POSITIVE_INFINITY) {
+        state.nextDecisionTime = time;
+      }
       const archetype = (entity.getValue(OpponentVisual, "archetype") ??
         "striker") as EnemyArchetype;
       this.updateOpponent(

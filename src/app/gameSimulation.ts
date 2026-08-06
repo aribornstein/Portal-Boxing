@@ -29,6 +29,7 @@ import {
 export interface SimulationSnapshot {
   readonly application: ApplicationState;
   readonly encounter: EncounterState;
+  readonly stageNumber: number;
   readonly stage?: StageManifest;
   readonly waveIndex: number;
   readonly bossPhase: 1 | 2 | 3;
@@ -102,6 +103,7 @@ export class GameSimulation {
     return {
       application: this.application.state,
       encounter: this.encounter.state,
+      stageNumber: this.stageNumber,
       stage: this.stage,
       waveIndex: this.waveIndex,
       bossPhase: bossPhase(this.bossHealthRatio),
